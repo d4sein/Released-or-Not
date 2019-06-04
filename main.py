@@ -33,7 +33,6 @@ if opm.status_code == 200:
 
 	with open('data.json', 'w') as f:
 		json.dump(data, f, sort_keys=False, indent=4)
-
 else:
 	print('Ainda não saiu ep novo de One Punch Man.')
 
