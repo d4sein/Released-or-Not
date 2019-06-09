@@ -28,6 +28,7 @@ To avoid any problems, search your anime on [HorribleSubs](https://horriblesubs.
   - I may consider rebuilding it, we'll see.
 - I'm not very much interested in implementing a GUI to it at the moment.
 - I am willing to keep working on the project.
+- Feel free to modify this project at your will, just be kind and give me credit for what I did.
 - The script is **FREE**.   
    
 ###### If you want to support me, please consider sharing this repo, giving it a star, fork or donating to:  
