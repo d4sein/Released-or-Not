@@ -1,22 +1,5 @@
 {
     "prefix": "https://horriblesubs.info/api.php?method=getshows&type=show&showid=",
     "site": "https://horriblesubs.info/shows/",
-    "animes": {
-        "One Punch Man S2": [
-            "1257",
-            8
-        ],
-        "Kimetsu no Yaiba": [
-            "1244",
-            10
-        ],
-        "Tensei Shitara Slime Datta Ken": [
-            "1152",
-            24
-        ],
-        "Dororo": [
-            "1208",
-            21
-        ]
-    }
+    "animes": {}
 }

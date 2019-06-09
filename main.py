@@ -62,7 +62,7 @@ Script that uses web scraping to track anime releases'''
 				data['animes'].pop(name)
 				print('Done!')
 			else:
-				print('This Anime is not in the list.')
+				print('This Anime is not in your list.')
 				exit()
 		except Exception:
 			print('An error occurred, bip bop.')
@@ -106,6 +106,23 @@ Script that uses web scraping to track anime releases'''
 		for anime in data['animes']:
 			ep = data['animes'][anime][1]
 			print(f'\u001b[38;5;3m>\u001b[0m {anime} [\u001b[38;5;3mEP {ep}\u001b[0m]')
+
+
+	def erase():
+		'''Erases your list completely (no recovery)'''
+		try:
+			validation = input('Are you sure you want to erase your list? After that, you won\'t be able to recover it. [\u001b[38;5;3my\u001b[0m/\u001b[38;5;3mn\u001b[0m]\n>')
+		except Exception:
+			pass
+
+		if validation == 'y':
+			data['animes'] = {}	
+			with open('data.json', 'w') as f:
+				json.dump(data, f, sort_keys=False, indent=4)
+				f.close()
+			print('Done!')
+		else:
+			exit()
 
 
 def _add_to_data(name, site):
