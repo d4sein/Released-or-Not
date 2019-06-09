@@ -19,6 +19,10 @@ class Parse:
 			self.description[self.methods[i]] = getattr(self.child, self.methods[i]).__doc__
 
 
+	def _show_help(self):
+		pass
+
+
 	def _exec(self):
 		try:
 			if len(sys.argv) < 2:
@@ -28,16 +32,15 @@ class Parse:
 			pass
 
 		try:
-			if sys.argv[1] == 'version':
+			if sys.argv[1] == '--version':
 				if self._version:
 					print(self._version)
 		except Exception:
 			pass
 
 		try:
-			if sys.argv[1] == 'help':
-				for key, value in self.description.items():
-					print(f'{key}: {value}')
+			if sys.argv[1] == '--help':
+				self._show_help()
 		except Exception:
 			pass
 

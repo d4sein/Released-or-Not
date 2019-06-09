@@ -1,8 +1,13 @@
 from parse import *
+import colorama
 import requests
 import json
 import re
 
+try:
+	colorama.init()
+except Exception:
+	pass
 
 with open('data.json', 'r') as f:
 	data = json.load(f)
@@ -17,11 +22,15 @@ class Commands(Parse):
 	def _root():
 		return {
 		'version': 'Version 1.0.0',
-		'greeting': 'Welcome!'
+		'greeting': 'Welcome!',
+		'head': '''Released or Not v1.0.0
+Willian Nascimento \u001b[38;5;3m<williann.nasc@gmail.com>\u001b[0m
+Script that uses web scraping to track anime releases'''
 		}
 
 
 	def add():
+		'''Adds a new Anime to your list'''
 		name = input('name: ')
 		url_name = name.replace(' ', '-').lower()
 
@@ -40,6 +49,7 @@ class Commands(Parse):
 
 
 	def remove():
+		'''Removes an Anime from your list'''
 		name = input('name: ')
 
 		try:
@@ -56,6 +66,7 @@ class Commands(Parse):
 
 
 	def update():
+		'''Checks if a new episode has been released'''
 		new = False
 
 		for anime in data['animes']:
@@ -78,34 +89,12 @@ class Commands(Parse):
 					json.dump(data, f, sort_keys=False, indent=4)
 					f.close()
 
-				quality = data['quality']
-				url = re.search(f'<div class="rls-link link-{quality}p" id="{latest_release}-{quality}p">.*?<a title="Torrent Link" href="(.*?)".*?<\/div>', str(download_page.content)).group(1)
-				print(f'Download the episode here: {url}\n')
-
 		if new == False:
 			print('There are no new releases. Unlucky.')
 
 
-	def quality(arg):
-		if arg == '480':
-			data['quality'] = arg
-			print(f'Default quality set to {arg}p.')
-		elif arg == '720':
-			data['quality'] = arg
-			print(f'Default quality set to {arg}p.')
-		elif arg == '1080':
-			data['quality'] = arg
-			print(f'Default quality set to {arg}p.')
-		else:
-			print('Invalid argument.')
-			exit()
-
-		with open('data.json', 'w') as f:
-			json.dump(data, f, sort_keys=False, indent=4)
-			f.close()
-
-
 	def list():
+		'''Shows full list of Animes being followed'''
 		for anime in data['animes']:
 			ep = data['animes'][anime][1]
 			print(f'{anime}. EP {ep}.')
