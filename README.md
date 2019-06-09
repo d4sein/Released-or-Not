@@ -21,6 +21,7 @@ To avoid any problems, search your anime on [HorribleSubs](https://horriblesubs.
 - [ ] List backup and shareable
 - [ ] Performance optimization
 - [ ] Integrated searching tool
+- [ ] Command to run the script 24h
 - [ ] Show accumulated released episodes (currently just shows last release)
 
 ## Considerations
