@@ -21,6 +21,7 @@ class Commands(Parse):
 	@set_root
 	def _root():
 		return {
+		'application': 'ron',
 		'version': 'Version 1.0.0',
 		'greeting': 'Welcome!',
 		'head': '''Released or Not v1.0.0
@@ -32,19 +33,23 @@ Script that uses web scraping to track anime releases'''
 	def add():
 		'''Adds a new Anime to your list'''
 		name = input('name: ')
+		
+		if name in data['animes']:
+			print('You\'re already following this Anime.')
+			exit()
+
 		url_name = name.replace(' ', '-').lower()
 
 		try:
 			site = requests.get(data['site'] + url_name)
 
 			if site.ok:
-				print('Done!')
 				_add_to_data(name, site)
 			else:
 				print('Invalid.')
 				exit()
 		except Exception as e:
-			print('An error occurred, bip bop:', e)
+			print('An error occurred, bip bop.')
 			exit()
 
 
@@ -56,8 +61,11 @@ Script that uses web scraping to track anime releases'''
 			if name in data['animes']:
 				data['animes'].pop(name)
 				print('Done!')
-		except Exception as e:
-			print('An error occurred, bip bop:', e)
+			else:
+				print('This Anime is not in the list.')
+				exit()
+		except Exception:
+			print('An error occurred, bip bop.')
 			exit()
 
 		with open('data.json', 'w') as f:
@@ -97,7 +105,7 @@ Script that uses web scraping to track anime releases'''
 		'''Shows full list of Animes being followed'''
 		for anime in data['animes']:
 			ep = data['animes'][anime][1]
-			print(f'{anime}. EP {ep}.')
+			print(f'\u001b[38;5;3m>\u001b[0m {anime} [\u001b[38;5;3mEP {ep}\u001b[0m]')
 
 
 def _add_to_data(name, site):
@@ -110,6 +118,8 @@ def _add_to_data(name, site):
 	with open('data.json', 'w') as f:
 		json.dump(data, f, sort_keys=False, indent=4)
 		f.close()
+
+	print('Done!')
 
 
 
