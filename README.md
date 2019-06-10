@@ -25,7 +25,7 @@ To avoid any problems, search your anime on [HorribleSubs](https://horriblesubs.
 - [ ] Show accumulated released episodes (currently just shows last release)
 
 ## Considerations
-- I did make an option to download torrent from the site, but their videos are mostly scuffed.
+- I did make an option to download torrent from the site, but their videos were mostly scuffed.
   - I may consider rebuilding it, we'll see.
 - I'm not very much interested in implementing a GUI to it at the moment.
 - I am willing to keep working on the project.
