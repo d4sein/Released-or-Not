@@ -14,7 +14,7 @@ First you'll need to install two external libs, Colorama and Requests.
 
 Now you just need to download or clone this repo and you're ready to go.  
 To see what you can do, run the script with the `--help` argument.  
-To avoid any problems, search your anime on [HorribleSubs](https://horriblesubs.info/) first, then get the name and use it to add to your list (you don't have to do that, for instance, both `kimetsu` and `Kimetsu no Yaiba` will work, but this might lead to future problems, so I recommend not to do that.)
+To avoid any problems, search your anime on [HorribleSubs](https://horriblesubs.info/) first, then get the name and use it to add to your list (you don't have to do that, for instance, both `kimetsu` and `Kimetsu no Yaiba` will work, but this might lead to future problems, so I recommend not to do that).
 
 ## Objectives
 - [x] Useable
