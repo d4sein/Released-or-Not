@@ -27,8 +27,3 @@ To avoid any problems, search your anime on [HorribleSubs](https://horriblesubs.
 BTC: 19cCVv2esi5KroSgpja7kgdium8ixHwYxt  
 ETH: 0xA5BAfed1094f087EcE37A6e5b7766317D408B2DC
 ```
-
-
-![example_1](https://i.imgur.com/cr2mxWh.png)
-![example_2](https://i.imgur.com/67uYAfB.png)
-![example_3](https://i.imgur.com/4zVQ0DT.png)
