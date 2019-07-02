@@ -21,6 +21,7 @@ To avoid any problems, search your anime on [HorribleSubs](https://horriblesubs.
 - [ ] Integrated searching tool
 - [ ] Option to run 24/7
 - [ ] Show accumulated released episodes
+- [ ] Add synopses
    
 ###### If you want to support me, please consider sharing this repo, giving it a star, fork or donating to:  
 ```
