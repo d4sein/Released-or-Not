@@ -8,7 +8,7 @@
 ### How does it work?
 It scrapes info from the web and stores them in a JSON file.  
 
-### How to use it?
+### How can I use it?
 Within the main directory, open terminal and type `pip install -r requirements.txt` .  
 That's it, you're good to go. You can do `python main.py --help` to see all the available commands.  
 
