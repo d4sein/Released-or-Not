@@ -1,5 +1,6 @@
 {
     "prefix": "https://horriblesubs.info/api.php?method=getshows&type=show&showid=",
     "site": "https://horriblesubs.info/shows/",
+    "search": "https://www.horriblesubs.info/?s=",
     "animes": {}
 }
