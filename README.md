@@ -12,7 +12,7 @@
 - [x] Show accumulated released episodes
 - [x] Add synopses
    
-###### If you want to support me, please consider sharing this repo, giving it a star, fork or donating to:  
+###### If you want to support this project, please consider sharing this repo, giving it a star, fork or donating to:  
 ```
 BTC: 19cCVv2esi5KroSgpja7kgdium8ixHwYxt  
 ETH: 0xA5BAfed1094f087EcE37A6e5b7766317D408B2DC
