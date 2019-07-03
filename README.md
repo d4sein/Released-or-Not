@@ -1,4 +1,4 @@
-<img align="left" width="64px" src="/src/images/icon.png" />
+<img align="left" width="64px" src="/src/images/neko.png" />
 
 # Released or Not
 
