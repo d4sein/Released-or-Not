@@ -1,8 +1,9 @@
+<img align="left" width="64px" src="/src/images/icon.png" />
+
 # Released or Not
-###### v1.0.0
-## About
-RON is a simple script that helps you manage your Animes.  
-It lets you request information from [HorribleSubs](https://horriblesubs.info/), and by doing so you can check if new episodes have been released.
+
+### What is it?
+*Released or Not* is a simple script that helps you manage your Animes.  
 
 ## How to use
 First you'll need to install two external libs, Colorama and Requests.  
