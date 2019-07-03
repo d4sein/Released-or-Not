@@ -9,7 +9,7 @@
 It scrapes info from the web and stores them in a JSON file.  
 
 ### How can I use it?
-After grabbing the newest release, within the main directory, open terminal and type `pip install -r requirements.txt` .  
+After grabbing the newest release, in the main directory, open terminal and type `pip install -r requirements.txt` .  
 That's it, you're good to go. You can do `python main.py --help` to see all the available commands.  
 
 ### Goals
