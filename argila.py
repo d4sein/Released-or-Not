@@ -128,7 +128,11 @@ class Argila:
 				# within one single print, in case one of the args were empty
 				# it would leave an extra space between them, which is not desired
 				print('USAGE:')
-				print(f'\t{self._app["call"]} {argv_command[1][1]}', end='')
+				
+				if sum([len(positional), len(optional), len(flags)]) == 0:
+					print(f'\t{self._app["call"]} {argv_command[1][1]}')
+				else:
+					print(f'\t{self._app["call"]} {argv_command[1][1]}', end='')
 
 				'''This may look messy at first, but what I\'m doing is very simple.
 				In order for the `positional`, `optional` and `flags` params to be
