@@ -3,9 +3,16 @@
 # Released or Not
 
 ### What is it?
-*Released or Not* is a simple script that helps you manage your Animes.  
+*Released or Not* is a simple program that helps you keep up with new Anime releases.  
 
-## Goals
+### How does it work?
+It scrapes info from the web and stores them in a JSON file.  
+
+### How to use it?
+Within the main directory, open terminal and type `pip install -r requirements.txt` .  
+That's it, you're good to go. You can do `python main.py --help` to see all the available commands.  
+
+### Goals
 - [x] Backup and shareable list
 - [x] Integrated searching tool
 - [x] Option to run 24/7
