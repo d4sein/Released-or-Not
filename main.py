@@ -257,6 +257,8 @@ class Commands(Argila):
 		with open('data.json', 'w') as f:
 			json.dump(data, f, indent=4)
 
+		print('Done!')
+
 	def _add_to_data(title, soup):
 		animeID = re.search('hs_showid = (\d+)', soup.text).group(1)
 		download_page = requests.get(data['prefix'] + animeID)
