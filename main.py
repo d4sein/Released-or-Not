@@ -103,9 +103,12 @@ class Commands(Argila):
 						try:
 							torrent_files = torrent_files.find_all(title='Torrent Link')
 
-							torrent = torrent_files[0]['href'] if data['download']['quality'] == '480' else torrent
-							torrent = torrent_files[1]['href'] if data['download']['quality'] == '720' else torrent
-							torrent = torrent_files[2]['href'] if data['download']['quality'] == '1080' else torrent
+							if data['download']['quality'] == '720':
+								torrent = torrent_files[1]['href']
+							elif data['download']['quality'] == '1080':
+								torrent = torrent_files[2]['href']
+							else:
+								torrent = torrent_files[1]['href']
 
 							r = requests.get(torrent, allow_redirects=True)
 							t = title.replace(' ', '-').lower()
@@ -238,8 +241,8 @@ class Commands(Argila):
 			data['download']['quality'] = quality
 			print('Done!')
 		elif quality != None:
-			data['download']['quality'] = 'empty'
-			print('Invalid quality. Set to "empty".')
+			data['download']['quality'] = '480'
+			print('Invalid quality. Default to "480".')
 		else:
 			pass
 
