@@ -18,6 +18,7 @@ That's it, you're good to go. You can do `python main.py --help` to see all the 
 - [x] Option to run 24/7
 - [x] Show accumulated released episodes
 - [x] Add synopses
+- [x] Download torrent files
    
 ###### If you want to support this project, please consider sharing this repo, giving it a star, fork or donating to:  
 ```
