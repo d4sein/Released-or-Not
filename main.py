@@ -1,15 +1,11 @@
-from argila import *
 from bs4 import BeautifulSoup
-import colorama
+from argila import *
 import requests
 import time
 import json
+import os
 import re
 
-try:
-	colorama.init()
-except Exception:
-	pass
 
 with open('data.json', 'r') as f:
 	data = json.load(f)
@@ -21,10 +17,13 @@ class Commands(Argila):
 
 	@root
 	def _root():
+		with open('./src/txt/title.txt', 'r') as f:
+			title = f.read()
+
 		return {
 		'head': '\nScript that uses web scraping to track Anime releases',
-		'version': 'Version 0.1.0',
-		'greeting': 'Welcome!',
+		'version': 'Version 0.2.5',
+		'greeting': title,
 		'call': 'main.py',
 		}
 
@@ -70,20 +69,22 @@ class Commands(Argila):
 			exit()
 
 		with open('data.json', 'w') as f:
-			json.dump(data, f, sort_keys=False, indent=4)
+			json.dump(data, f, indent=4)
 			f.close()
 
-	def update() -> 'update':
+	@set_help({'download': 'Returns a magnet link for every new released episode'})
+	@set_optional_params(['download'])
+	def update(download) -> 'update':
 		'''Checks if new episodes have been released'''
 		new = False
 
 		for title in data['animes']:
-			animeID = data['animes'][title][0]
-			current_release = data['animes'][title][1]
-			synopsis = data['animes'][title][2]
+			animeID, current_release, synopsis = data['animes'][title]
 
 			try:
 				download_page = requests.get(data['prefix'] + animeID)
+				download_torrent = BeautifulSoup(download_page.content, 'html.parser')
+
 				latest_release = re.search('id="(\d+?)"', str(download_page.content)).group(1)
 				latest_release = int(latest_release)
 			except Exception:
@@ -93,7 +94,30 @@ class Commands(Argila):
 				new = True
 
 				for i in range(current_release, latest_release):
-					print(f'A new episode of {title} has been released! [\u001b[38;5;3mEP {i + 1}\u001b[0m]')
+					i += 1
+
+					print(f'A new episode of {title} has been released! [EP {i}]')
+
+					if data['download']['active'] is True:
+						torrent_files = download_torrent.find(id=i)
+						try:
+							torrent_files = torrent_files.find_all(title='Torrent Link')
+
+							torrent = torrent_files[0]['href'] if data['download']['quality'] == '480' else torrent
+							torrent = torrent_files[1]['href'] if data['download']['quality'] == '720' else torrent
+							torrent = torrent_files[2]['href'] if data['download']['quality'] == '1080' else torrent
+
+							r = requests.get(torrent, allow_redirects=True)
+							t = title.replace(' ', '-').lower()
+
+							if not os.path.exists('./torrents'):
+								os.makedirs('./torrents')
+
+							open(f'./torrents/{t}-{i}.torrent', 'wb').write(r.content)
+							
+							print(f'\tTorrent file has been downloaded.\n')
+						except AttributeError:
+							print('\tThere\'s no torrent for this episode.\n')
 
 				kv = {
 					title: [
@@ -106,8 +130,7 @@ class Commands(Argila):
 				data['animes'].update(kv)
 
 				with open('data.json', 'w') as f:
-					json.dump(data, f, sort_keys=False, indent=4)
-					f.close()
+					json.dump(data, f, indent=4)
 
 		if new == False:
 			print('There are no new releases. bip.')
@@ -116,12 +139,12 @@ class Commands(Argila):
 		'''Shows list of Animes being followed'''
 		for title in data['animes']:
 			ep = data['animes'][title][1]
-			print(f'{title} [\u001b[38;5;3mEP {ep}\u001b[0m]')
+			print(f'{title} [EP {ep}]')
 
 	def erase() -> 'erase':
 		'''Erases the list completely'''
 		try:
-			validation = input('Are you sure you want to erase your list? After that, you won\'t be able to recover it. [\u001b[38;5;3my\u001b[0m/\u001b[38;5;3mn\u001b[0m]\n')
+			validation = input('Are you sure you want to erase your list? After that, you won\'t be able to recover it. [y/n]\n')
 		except Exception:
 			pass
 
@@ -129,8 +152,7 @@ class Commands(Argila):
 			data['animes'] = {}
 
 			with open('data.json', 'w') as f:
-				json.dump(data, f, sort_keys=False, indent=4)
-				f.close()
+				json.dump(data, f, indent=4)
 
 			print('Done!')
 		else:
@@ -155,6 +177,8 @@ class Commands(Argila):
 		for title in data['animes']:
 			backup.write(f'{title}\n')
 
+		print('Done!')
+
 	def restore() -> 'restore':
 		'''Restores list from a backup.txt file'''
 		backup = open('backup.txt', 'r+')
@@ -163,7 +187,7 @@ class Commands(Argila):
 		for title in data:
 			Commands.add(title)
 
-	def search() -> 'Search':
+	def search() -> 'search':
 		'''Searches for an Anime'''
 		anime = input('name: ')
 
@@ -186,7 +210,7 @@ class Commands(Argila):
 
 	@set_help({'timer': 'Sets the interval between updates in minutes'})
 	@set_optional_params(['timer'])
-	def autopilot(timer) -> 'Autopilot':
+	def autopilot(timer) -> 'autopilot':
 		'''Runs the script in autopilot'''
 		if timer == None:
 			timer = 60
@@ -204,6 +228,31 @@ class Commands(Argila):
 		while True:
 			Commands.update()
 			time.sleep(timer * 60)
+
+
+	@set_help({'quality': '[480, 720, 1080]'})
+	@set_optional_params(['quality'])
+	def quality(quality) -> 'quality':
+		'''Sets download quality'''
+		if quality in ['480', '720', '1080']:
+			data['download']['quality'] = quality
+			print('Done!')
+		elif quality != None:
+			data['download']['quality'] = 'empty'
+			print('Invalid quality. Set to "empty".')
+		else:
+			pass
+
+		with open('data.json', 'w') as f:
+			json.dump(data, f, indent=4)
+
+	@set_help({'active': 'Sets download to True'})
+	def download(active=False) -> 'download':
+		'''Enables download'''
+		data['download']['active'] = active if active is any([True, False]) else False
+
+		with open('data.json', 'w') as f:
+			json.dump(data, f, indent=4)
 
 	def _add_to_data(title, soup):
 		animeID = re.search('hs_showid = (\d+)', soup.text).group(1)
@@ -228,10 +277,10 @@ class Commands(Argila):
 		data['animes'].update(kv)
 
 		with open('data.json', 'w') as f:
-			json.dump(data, f, sort_keys=False, indent=4)
-			f.close()
+			json.dump(data, f, indent=4)
 
 		print('Done!')
+
 
 if __name__ == '__main__':
 	try:
