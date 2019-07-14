@@ -27,16 +27,14 @@ class Argila:
 		if len(sys.argv) == 1:
 			print(self._app['greeting'])
 
-		elif sys.argv[1] == '--version' or sys.argv[1] == '-v':
+		elif sys.argv[1] == '--version':
 			print(self._app['version'])
 
-		elif sys.argv[1] == '--help' or sys.argv[1] == '-h':
+		elif sys.argv[1] == '--help':
 			if len(sys.argv) == 3:
 				self._get_command_help()
-
 			else:
 				self._get_help()
-
 
 		elif len(sys.argv) > 1:
 			self._get_command_validation()
@@ -50,22 +48,23 @@ class Argila:
 		print(f'\t{self._app["call"]} --help (command)')
 		print('\nBUILTIN COMMANDS:')
 
-		full_command = f'-h, --help'
+		full_command = '--help'
 		spacing = ' ' * (20 - len(full_command))
 		print(f'\t{full_command}{spacing}Shows this message')
 
-		full_command = f'-v, --version'
+		full_command = '--version'
 		spacing = ' ' * (20 - len(full_command))
 		print(f'\t{full_command}{spacing}Shows version')
 
 		print('\nCOMMANDS:')
 
 		for command, description in zip(self.argv_commands.values(), self.methods_description.values()):
-			full_command = f'{command[0]}, {command[1]}'
+			full_command = f'{command}'
 			# gets lenght of `full_command` so it can be
 			# deducted from a fixed amount of spacing
 			spacing = ' ' * (20 - len(full_command))
 			print(f'\t{full_command}{spacing}{description}')
+		print()
 
 	def _get_command_help(self):
 		for argv_command, command in zip(self.argv_commands.items(), self.commands.items()):
@@ -85,7 +84,7 @@ class Argila:
 			except Exception:
 				metavars = []
 
-			if sys.argv[2] in argv_command[1]:
+			if sys.argv[2] in argv_command:
 				# disposable variables, don't even bother
 				exec_command = getattr(self.child, command[1])
 				command_args = inspect.getfullargspec(exec_command).args
@@ -128,11 +127,7 @@ class Argila:
 				# within one single print, in case one of the args were empty
 				# it would leave an extra space between them, which is not desired
 				print('USAGE:')
-				
-				if sum([len(positional), len(optional), len(flags)]) == 0:
-					print(f'\t{self._app["call"]} {argv_command[1][1]}')
-				else:
-					print(f'\t{self._app["call"]} {argv_command[1][1]}', end='')
+				print(f'\t{self._app["call"]} {argv_command[1]}', end='')
 
 				'''This may look messy at first, but what I\'m doing is very simple.
 				In order for the `positional`, `optional` and `flags` params to be
@@ -241,7 +236,7 @@ class Argila:
 
 		for argv_command, command in zip(self.argv_commands.items(), self.commands.items()):
 
-			if sys.argv[1] in argv_command[1]:
+			if sys.argv[1] == argv_command[1]:
 				exec_command = getattr(self.child, command[1])
 				command_args = inspect.getfullargspec(exec_command).args
 
@@ -266,7 +261,6 @@ class Argila:
 						non_positional_params.append(param)
 
 				for arg in sys.argv[2:]:
-
 					# checks if non-positional arg is valid
 					if re.match('--\w', arg) or re.match('-\w', arg) and len(arg) == 2:
 						arg = re.sub('-', '', arg)
@@ -340,7 +334,7 @@ class Argila:
 						final_args.update(kv)
 
 				for arg in command_args:
-					if arg not in final_args:
+					if arg not in final_args and arg in opt_params:
 						kv = {arg: None}
 						final_args.update(kv)
 
@@ -365,16 +359,14 @@ class Argila:
 			try:
 				# tries to get `return annotation` from method
 				command = getattr(self.child, method).__annotations__['return']
-				kv = {command: method}
+				kv1 = {command: method}
+				kv2 = {command: f'--{command}'}
 			except KeyError:
-				kv = {method: method}
-				pass
+				kv1 = {method: method}
+				kv2 = {method: f'--{method}'}
 			finally:
-				self.commands.update(kv)
-				# defines `-e` and `--example` from `command`
-				a, b = f'-{command[0]}', f'--{command}'
-				kv = {command: [a, b]}
-				self.argv_commands.update(kv)
+				self.commands.update(kv1)
+				self.argv_commands.update(kv2)
 
 	def _get_flags(self):
 		for method in self.methods:
