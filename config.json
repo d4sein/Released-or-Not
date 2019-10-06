@@ -1,0 +1,9 @@
+{
+    "prefix": "https://horriblesubs.info/api.php?method=getshows&type=show&showid=",
+    "website": "https://horriblesubs.info/shows/",
+    "search": "https://www.horriblesubs.info/?s=",
+    "download": {
+        "quality": "1080",
+        "status": true
+    }
+}
