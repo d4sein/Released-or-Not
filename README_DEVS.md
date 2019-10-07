@@ -1,4 +1,4 @@
-## Format for pull requests
+### Format for pull requests
 
 1. Documentation
     The code should have decent documentation, using PEP8 as a guide is a great idea.
