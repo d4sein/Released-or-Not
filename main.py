@@ -17,7 +17,6 @@ import json
 import re
 import time
 
-import colorama
 import asyncio
 import requests
 from bs4 import BeautifulSoup
@@ -33,7 +32,9 @@ conn = sqlite3.connect('data.db')
 c = conn.cursor()
 
 
-colorama.init()
+# uncomment these two lines if your terminal doesn't support ANSI code
+# import colorama
+# colorama.init()
 
 
 class Database:
@@ -219,7 +220,7 @@ class Application:
             print('Something went wrong, it was not possible to access the main source.')
 
 
-    @command.positional({'title': 'The anime\' title'})
+    @command.positional({'title': 'The anime\'s title'})
     @command.name('unfollow')
     async def unfollow(self, title: str) -> None:
         '''Stops following an Anime'''
