@@ -19,6 +19,7 @@ That's it, you're good to go. You can do `python main.py --help` to see all the 
 - [x] Show accumulated released episodes
 - [x] Add description
 - [x] Download torrent files
+- [ ] Autocompletion
    
 ###### If you want to support this project, please consider sharing this repo, giving it a star, fork or donating to:  
 ```
