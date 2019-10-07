@@ -20,3 +20,6 @@
             Optional -> Defaults to: None
         '''
     ```
+
+2. Asynchronous  
+    The functions and methods must be asynchronous (except Exceptions).
