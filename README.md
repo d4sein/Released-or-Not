@@ -24,4 +24,7 @@ That's it, you're good to go. You can do `python main.py --help` to see all the 
 ```
 BTC: 19cCVv2esi5KroSgpja7kgdium8ixHwYxt  
 ETH: 0xA5BAfed1094f087EcE37A6e5b7766317D408B2DC
-```
+```  
+
+
+If you're a developer and want to contribute, check out the [README_DEVS.md](README_DEVS.md)
