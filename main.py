@@ -181,7 +181,7 @@ db.init(c)
 
 
 class Application:
-    parser.config(default_message='Released or Not')
+    parser.config(version='2.6-a1', default_message='Released or Not')
 
     # docstrings are used to set command's description
 

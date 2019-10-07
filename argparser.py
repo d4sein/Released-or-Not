@@ -6,13 +6,14 @@ class ArgParser:
     def __init__(self):
         # setting some general infos
         self.prefix = str() # comes before commands and args
+        self.version = str() # the Application version
         self.default_message = str() # default message for when the Application is called without passing any args
 
         # setting the dict that will hold all commands info
         self.commands = dict()
 
     @staticmethod
-    def config(prefix: str='--', default_message: str='') -> None:
+    def config(prefix: str='--', version: str='', default_message: str='') -> None:
         '''Sets some config for Application
 
         Parameters:
@@ -20,11 +21,16 @@ class ArgParser:
                 Comes before commands and arguments
                 Optional -> Defaults to: str="--"
 
+            version: str
+                The Application version
+                Optional -> Defaults to: str=""
+
             default_message: str
                 Default message to be returned when the Application is ran without passing any arguments
                 Optional -> Defaults to: str=""
         '''
         parser.prefix = prefix
+        parser.version = version
         parser.default_message = default_message
 
     @staticmethod
@@ -49,6 +55,9 @@ class ArgParser:
             # and the arg is `help`
             if argv[1] == f'{parser.prefix}help':
                 parser.help()
+
+            elif argv[1] == f'{parser.prefix}version':
+                print(parser.version)
 
                 # else, looks for commands that take no args
             else:
